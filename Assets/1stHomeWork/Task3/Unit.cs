@@ -1,31 +1,34 @@
 using UnityEngine;
 
 public class Unit
-{  
-    public int health { get; private set; }
-    public string unitName;
+{
+	public string unitName;
+	public int health { get; private set; }
 
-    private int minimumDamage;
-    private int maximumDamage;
-    public Unit(string name, int unitHealth, int minDamage, int maxDamage)
-    {
-        unitName = name;
-        health = unitHealth;
-        minimumDamage = minDamage;
-        maximumDamage = maxDamage;
-    }
-    public int GetDamage()
-    {
-        int damage = Random.Range(minimumDamage, maximumDamage + 1);
-        return damage;
-    }
-    public void TakeDamage(int damageAmount)
-    {
-        health = health - damageAmount;
+	private int m_minimumDamage;
+	private int m_maximumDamage;
 
-        if (health < 0)
-        {
-            health = 0;
-        }
-    }
+	public Unit(UnitStats unitStats)
+	{
+		unitName = unitStats.unitName;
+		health = unitStats.health;
+		m_minimumDamage = unitStats.minimumDamage;
+		m_maximumDamage = unitStats.maximumDamage;
+	}
+
+	public int GetDamage()
+	{
+		int damage = DamageCalculator.CalculateDamage(m_minimumDamage, m_maximumDamage);
+		return damage;
+	}
+
+	public void TakeDamage(int damageAmount)
+	{
+		health = health - damageAmount;
+
+		if (health < 0)
+		{
+			health = 0;
+		}
+	}
 }

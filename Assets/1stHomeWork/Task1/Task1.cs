@@ -2,56 +2,30 @@ using UnityEngine;
 
 public class Task1 : MonoBehaviour
 {
-    private float damage;
-    private bool isCritical;
-    private float damageMultiplier;
-    private float criticalMultiplire = 2f;
-    public enum Element {ice, fire, none}
+    private float m_damage;
+    private bool m_isCritical;
+    private float m_damageMultiplier;
+
+    public enum Element{None, Ice, Fire}
+
     public float weaponDamage;
     public float armor;
     public float criticalChance;
 
+    [SerializeField] private Element m_weaponElement;
+    [SerializeField] private Element m_targetElement;
 
-    [SerializeField] private Element weaponElement;
-    [SerializeField] private Element targetElement;
-
-
-    private float DamageCalculaion()
+    private void Start()
     {
-        damage = weaponDamage - armor;
-        if(damage >= 1f)
-        {
-            return damage;
-        }
-        else
-        {
-            damage = 1f;
-            return damage;
-        }
-    }
-    void Start()
-    {
-        if ((weaponElement == Element.none) || targetElement == (Element.none))
-        {
-            damageMultiplier = 1f;
-            DamageCalculaion();
-        }
-        else if (weaponElement != targetElement)
-        {
-            damageMultiplier = 1.5f;
-            damage = Mathf.FloorToInt(DamageCalculaion() * damageMultiplier);
-        }
-        else
-        {
-            damageMultiplier = 0f;
-            damage = DamageCalculaion() * damageMultiplier;
-        }
-        if((Random.Range(0f, 1f)) < criticalChance)
-        {
-            damage = damage * criticalMultiplire;
-            isCritical = true;
-        }
-        Debug.Log($"Урон: {damage}, Броня: {armor}, Стихия оружия: {weaponElement}, Стихия цели: {targetElement}, Крит: {isCritical}, Шанс крита: {criticalChance}, Множитель урона: {damageMultiplier}");
-    }
+        m_damage = DamageCalculator.CalculateDamage(
+            weaponDamage,
+            armor,
+            m_weaponElement,
+            m_targetElement,
+            criticalChance,
+            out m_damageMultiplier,
+            out m_isCritical);
 
+        Debug.Log($"Урон: {m_damage}, Броня: {armor}, Стихия оружия: {m_weaponElement}, Стихия цели: {m_targetElement}, Крит: {m_isCritical}, Шанс крита: {criticalChance}, Множитель урона: {m_damageMultiplier}");
+    }
 }

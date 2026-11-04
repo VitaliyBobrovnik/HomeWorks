@@ -2,73 +2,86 @@ using UnityEngine;
 
 public class Arena : MonoBehaviour
 {
-    public enum HeroType { Warrior, Mage }
+	public enum HeroType{Warrior, Mage}
 
-    [SerializeField] private HeroType heroType;
-    [SerializeField] private int maximumRounds = 10;
+	[SerializeField] private HeroType m_heroType;
+	[SerializeField] private int m_maximumRounds = 10;
 
-    private Unit hero;
-    private Unit enemy;
+	[SerializeField] private UnitStats m_warriorStats;
+	[SerializeField] private UnitStats m_mageStats;
+	[SerializeField] private UnitStats m_goblinStats;
+	[SerializeField] private UnitStats m_orcStats;
+	[SerializeField] private UnitStats m_trollStats;
 
-    void Awake()
-    {
-        if (heroType == HeroType.Warrior)
-        {
-            hero = new Unit("Воин", 100, 10, 16);
-        }
-        else
-        {
-            hero = new Unit("Маг", 130, 6, 12);
-        }
+	private Unit m_hero;
+	private Unit m_enemy;
 
-        int enemyNumber = Random.Range(0, 3);
+	private void Awake()
+	{
+		if (m_heroType == HeroType.Warrior)
+		{
+			m_hero = new Unit(m_warriorStats);
+		}
+		else
+		{
+			m_hero = new Unit(m_mageStats);
+		}
 
-        if (enemyNumber == 0)
-        {
-            enemy = new Unit("Гоблин", 50, 4, 8);
-        }
-        else if (enemyNumber == 1)
-        {
-            enemy = new Unit("Орк", 80, 5, 10);
-        }
-        else
-        {
-            enemy = new Unit("Тролль", 140, 8, 12);
-        }
-    }
+		int enemyNumber = Random.Range(0, 3);
 
-    void Start()
-    {
-        Debug.Log(hero.unitName + " (" + hero.health + " HP) против " + enemy.unitName + " (" + enemy.health + " HP)");
+		if (enemyNumber == 0)
+		{
+			m_enemy = new Unit(m_goblinStats);
+		}
+		else if (enemyNumber == 1)
+		{
+			m_enemy = new Unit(m_orcStats);
+		}
+		else
+		{
+			m_enemy = new Unit(m_trollStats);
+		}
+	}
 
-        for (int currentRound = 1; currentRound <= maximumRounds; currentRound++)
-        {
-            int heroDamage = hero.GetDamage();
+	private void Start()
+	{
+		Debug.Log(m_hero.unitName + " (" + m_hero.health + " HP) РїСЂРѕС‚РёРІ "
+			+ m_enemy.unitName + " (" + m_enemy.health + " HP)");
 
-            enemy.TakeDamage(heroDamage);
+		for (int currentRound = 1; currentRound <= m_maximumRounds; currentRound++)
+		{
+			int heroDamage = m_hero.GetDamage();
 
-            string roundMessage = "Раунд " + currentRound + ": " + hero.unitName + " наносит " + heroDamage + ", у противника " + enemy.health + " HP";
+			m_enemy.TakeDamage(heroDamage);
 
-            if (enemy.health == 0)
-            {
-                Debug.Log(roundMessage);
-                Debug.Log("Победа! У героя осталось " + hero.health + " HP");
-                return;
-            }
+			string roundMessage = "Р Р°СѓРЅРґ " + currentRound + ": "
+				+ m_hero.unitName + " РЅР°РЅРѕСЃРёС‚ " + heroDamage
+				+ ", Сѓ РїСЂРѕС‚РёРІРЅРёРєР° " + m_enemy.health + " HP";
 
-            int enemyDamage = enemy.GetDamage();
+			if (m_enemy.health == 0)
+			{
+				Debug.Log(roundMessage);
+				Debug.Log("РџРѕР±РµРґР°! РЈ РіРµСЂРѕСЏ РѕСЃС‚Р°Р»РѕСЃСЊ " + m_hero.health + " HP");
+				return;
+			}
 
-            hero.TakeDamage(enemyDamage);
+			int enemyDamage = m_enemy.GetDamage();
 
-            roundMessage = roundMessage + "; " + enemy.unitName + " наносит " + enemyDamage + ", у героя " + hero.health + " HP";
+			m_hero.TakeDamage(enemyDamage);
 
-            Debug.Log(roundMessage);
+			roundMessage = roundMessage + "; "
+				+ m_enemy.unitName + " РЅР°РЅРѕСЃРёС‚ " + enemyDamage
+				+ ", Сѓ РіРµСЂРѕСЏ " + m_hero.health + " HP";
 
-            if (hero.health == 0)
-            {
-                Debug.Log("Герой погиб");
-                return;
-            }
-        }
-    }
+			Debug.Log(roundMessage);
+
+			if (m_hero.health == 0)
+			{
+				Debug.Log("РџРѕСЂР°Р¶РµРЅРёРµ! Р“РµСЂРѕР№ РїРѕРіРёР±");
+				return;
+			}
+		}
+
+		Debug.Log("РќРёС‡СЊСЏ! Р—Р°РєРѕРЅС‡РёР»РёСЃСЊ СЂР°СѓРЅРґС‹");
+	}
 }

@@ -145,11 +145,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1355440071}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65c82ecb0c1d72348a9417ceea18c8d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 50f36cdfecb701b4a8b14cd4f4cc27a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arena
-  heroType: 0
-  maximumRounds: 10
+  m_heroType: 0
+  m_maximumRounds: 10
+  m_warriorStats: {fileID: 11400000, guid: 5f6d081fa5578324681be3c2da57b7b1, type: 2}
+  m_mageStats: {fileID: 11400000, guid: e5f01b6e2f4b82e489cff54ca9dcdd92, type: 2}
+  m_goblinStats: {fileID: 11400000, guid: 5d421cb5d904cde4bab74274d8bd376c, type: 2}
+  m_orcStats: {fileID: 11400000, guid: 608eaa2a3294cc645860b33b00e49eaf, type: 2}
+  m_trollStats: {fileID: 11400000, guid: 4cb4b593cf7e8c145a4f4188e03536cf, type: 2}
 --- !u!4 &1355440073
 Transform:
   m_ObjectHideFlags: 0

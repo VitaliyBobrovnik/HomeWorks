@@ -3,66 +3,78 @@ using UnityEngine;
 
 public class Inventory
 {
-    private Dictionary<string, int> items = new Dictionary<string, int>();
+	private Dictionary<string, int> m_items = new Dictionary<string, int>();
 
-    public void AddItem(string itemName, int itemCount = 1)
-    {
-        if (items.ContainsKey(itemName) == true)
-        {
-            items[itemName] = items[itemName] + itemCount;
-            Debug.Log("Добавлено: " + itemName + " x" + itemCount);
-        }
-        else
-        {
-            if (items.Count < 10)
-            {
-                items.Add(itemName, itemCount);
-                Debug.Log("Добавлено: " + itemName + " x" + itemCount);
-            }
-            else
-            {
-                Debug.Log("Нет места для " + itemName);
-            }
-        }
-    }
+	public void AddItem(string itemName, int itemCount = 1)
+	{
+		if (itemCount <= 0)
+		{
+			Debug.LogWarning("РљРѕР»РёС‡РµСЃС‚РІРѕ РґРѕР±Р°РІР»СЏРµРјС‹С… РїСЂРµРґРјРµС‚РѕРІ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ Р±РѕР»СЊС€Рµ 0");
+			return;
+		}
 
-    public void RemoveItem(string itemName, int itemCount = 1)
-    {
-        if (items.ContainsKey(itemName) == true)
-        {
-            if (items[itemName] >= itemCount)
-            {
-                items[itemName] = items[itemName] - itemCount;
+		if (m_items.ContainsKey(itemName) == true)
+		{
+			m_items[itemName] = m_items[itemName] + itemCount;
+			Debug.Log("Р”РѕР±Р°РІР»РµРЅРѕ: " + itemName + " x" + itemCount);
+		}
+		else
+		{
+			if (m_items.Count < 10)
+			{
+				m_items.Add(itemName, itemCount);
+				Debug.Log("Р”РѕР±Р°РІР»РµРЅРѕ: " + itemName + " x" + itemCount);
+			}
+			else
+			{
+				Debug.Log("РќРµС‚ РјРµСЃС‚Р° РґР»СЏ " + itemName);
+			}
+		}
+	}
 
-                Debug.Log("Удалено: " + itemName + " x" + itemCount);
+	public void RemoveItem(string itemName, int itemCount = 1)
+	{
+		if (itemCount <= 0)
+		{
+			Debug.LogWarning("РљРѕР»РёС‡РµСЃС‚РІРѕ СѓРґР°Р»СЏРµРјС‹С… РїСЂРµРґРјРµС‚РѕРІ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ Р±РѕР»СЊС€Рµ 0");
+			return;
+		}
 
-                if (items[itemName] == 0)
-                {
-                    items.Remove(itemName);
-                }
-            }
-            else
-            {
-                Debug.Log("Нельзя удалить " + itemName + ". Недостаточно предметов");
-            }
-        }
-        else
-        {
-            Debug.Log("Нельзя удалить " + itemName + ". Такого предмета нет");
-        }
-    }
+		if (m_items.ContainsKey(itemName) == true)
+		{
+			if (m_items[itemName] >= itemCount)
+			{
+				m_items[itemName] = m_items[itemName] - itemCount;
 
-    public void Print()
-    {
-        int totalCount = 0;
+				Debug.Log("РЈРґР°Р»РµРЅРѕ: " + itemName + " x" + itemCount);
 
-        foreach (KeyValuePair<string, int> itemName in items)
-        {
-            Debug.Log(itemName.Key + " x" + itemName.Value);
-            totalCount = totalCount + itemName.Value;
-        }
+				if (m_items[itemName] == 0)
+				{
+					m_items.Remove(itemName);
+				}
+			}
+			else
+			{
+				Debug.Log("РќРµР»СЊР·СЏ СѓРґР°Р»РёС‚СЊ " + itemName + ". РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂРµРґРјРµС‚РѕРІ");
+			}
+		}
+		else
+		{
+			Debug.Log("РќРµР»СЊР·СЏ СѓРґР°Р»РёС‚СЊ " + itemName + ". РўР°РєРѕРіРѕ РїСЂРµРґРјРµС‚Р° РЅРµС‚");
+		}
+	}
 
-        Debug.Log("Уникальных предметов: " + items.Count);
-        Debug.Log("Всего предметов: " + totalCount);
-    }
+	public void Print()
+	{
+		int totalCount = 0;
+
+		foreach (KeyValuePair<string, int> itemName in m_items)
+		{
+			Debug.Log(itemName.Key + " x" + itemName.Value);
+			totalCount = totalCount + itemName.Value;
+		}
+
+		Debug.Log("РЈРЅРёРєР°Р»СЊРЅС‹С… РїСЂРµРґРјРµС‚РѕРІ: " + m_items.Count);
+		Debug.Log("Р’СЃРµРіРѕ РїСЂРµРґРјРµС‚РѕРІ: " + totalCount);
+	}
 }
