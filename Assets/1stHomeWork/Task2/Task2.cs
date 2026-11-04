@@ -10,7 +10,7 @@ public class Task2 : MonoBehaviour
         inventory.AddItem("ўит");
         inventory.AddItem("«елье", 5);
         inventory.AddItem("ћеч", 3);
-        
+
         inventory.RemoveItem("«елье", 2);
         inventory.RemoveItem("ўит");
         inventory.RemoveItem("Ћук");
