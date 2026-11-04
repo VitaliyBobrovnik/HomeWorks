@@ -13,9 +13,14 @@ public static class DamageCalculator
 		out float damageMultiplier,
 		out bool isCritical)
 	{
-		float damage = weaponDamage - armor;
+        if (armor < 0f)
+        {
+            armor = 0f;
+        }
 
-		if (damage < 1f)
+        float damage = weaponDamage - armor;
+
+        if (damage < 1f)
 		{
 			damage = 1f;
 		}
